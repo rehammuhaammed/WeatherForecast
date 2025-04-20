@@ -6,6 +6,8 @@ body{
     
     font-family: "Winky Rough", sans-serif;
 }
+
+
  nav {
     background-color: #80B7D9;
     
@@ -45,6 +47,10 @@ nav .logo span{
  .searchBtn:hover{
     background-color: #80B7D9;
     border: none;
+}
+#msg{
+    font-size: 18px;
+    margin:0px  10px;
 }
 
 .row .col .inner{

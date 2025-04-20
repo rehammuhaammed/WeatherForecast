@@ -1,14 +1,14 @@
 let searchInput = document.getElementById("searchInput");
 let rowData = document.getElementById("row");
+let msg = document.getElementById("msg");
 let regex = /^[A-Za-z ]{3,}$/;
-let forecastData=[]
-getWeather();// at first the forecast of cairo has displayed  
+let forecastData = [];
+getWeather(); // at first the forecast of cairo has displayed
 async function getWeather() {
   let x = await fetch(
     `https://api.weatherapi.com/v1/forecast.json?key=10a2f41ca0584e56a0e181338251804&q=Cairo&days=3`
   );
   forcast = await x.json(); // forcat
-  
 
   extractdata();
   display();
@@ -17,59 +17,71 @@ async function getWeather() {
 async function search() {
   let value = searchInput.value;
   if (regex.test(value)) {
+    msg.classList.add("d-none")
     let x = await fetch(
       `https://api.weatherapi.com/v1/search.json?key=10a2f41ca0584e56a0e181338251804&q=${value}`
     );
-    let data = await x.json();// array has many city start with lon choose first one only
-    
-    if (data.length != 0) { // if the arr not empty (search may back no counry has this name [])
+    let data = await x.json(); // array has many city start with lon choose first one only
+
+    if (data.length != 0) {
+      // if the arr not empty (search may back no counry has this name [])
+      msg.classList.add("d-none")
       let y = await fetch(
         `https://api.weatherapi.com/v1/forecast.json?key=10a2f41ca0584e56a0e181338251804&q=${data[0].name}&days=3`
       );
-      forcast = await y.json();// array of 3 days forecating weather
+      forcast = await y.json(); // array of 3 days forecating weather
       extractdata();
       display();
-      
-      
     }
+    else{
+      msg.classList.remove("d-none")
+      msg.textContent = " There is no city with this name. Please enter another city. ";
+    }
+  } else {
+    msg.classList.remove("d-none")
+    msg.textContent = " Please enter at least 3 characters to search ";
+  
+  }
+  if(value==""){
+    msg.classList.add("d-none")
   }
 }
 
 function extractdata() {
-    forecastData = []; 
-  
-    for (let i = 0; i < 3; i++) {
-      let Temp=forcast.current.temp_c
-      let day = forcast.forecast.forecastday[i];
-      let date = new Date(day.date);
-      let options = { weekday: "long", month: "long", day: "numeric" };
-      let formattedDate = date.toLocaleDateString("en-US", options).replace(",", "").split(" ");//[day ,numday,mounth]
-  
-      let dayname = formattedDate[0];
-      let month = formattedDate[2] + " " + formattedDate[1]; // April 20
-      let Avgtemp = Temp;
-      let maxTemp=day.day.maxtemp_c
-      let minTemp=day.day.mintemp_c
-      let icon = day.day.condition.icon;
-      let text = day.day.condition.text;
-      let country = forcast.location.name;
- 
-  
-      forecastData.push(
-        {
-        dayname,
-        month,
-        icon,
-        text,
-        country,
-        Avgtemp,
-        maxTemp,
-        minTemp
-      }
-    );
-    }
-    // array has full data for three the  days 
+  forecastData = [];
+
+  for (let i = 0; i < 3; i++) {
+    let Temp = forcast.current.temp_c;
+    let day = forcast.forecast.forecastday[i];
+    let date = new Date(day.date);
+    let options = { weekday: "long", month: "long", day: "numeric" };
+    let formattedDate = date
+      .toLocaleDateString("en-US", options)
+      .replace(",", "")
+      .split(" "); //[day ,numday,mounth]
+
+    let dayname = formattedDate[0];
+    let month = formattedDate[2] + " " + formattedDate[1]; // April 20
+    let Avgtemp = Temp;
+    let maxTemp = day.day.maxtemp_c;
+    let minTemp = day.day.mintemp_c;
+    let icon = day.day.condition.icon;
+    let text = day.day.condition.text;
+    let country = forcast.location.name;
+
+    forecastData.push({
+      dayname,
+      month,
+      icon,
+      text,
+      country,
+      Avgtemp,
+      maxTemp,
+      minTemp,
+    });
   }
+  // array has full data for three the  days
+}
 
 function display() {
   let cartona = "";
@@ -123,10 +135,9 @@ function display() {
                 </div>
               </div>
 
-`;// put the first card in cartona because it has a different design
-for (let i = 1; i < forecastData.length; i++) {
-   cartona+=
-   `
+`; // put the first card in cartona because it has a different design
+  for (let i = 1; i < forecastData.length; i++) {
+    cartona += `
     <div class="col ">
                 <div class="inner text-center">
                   <div class="header">
@@ -155,9 +166,9 @@ for (let i = 1; i < forecastData.length; i++) {
                 </div>
               </div>
    
-   `
-    // loop to put anther 2 cards in cartona also 
-}
+   `;
+    // loop to put anther 2 cards in cartona also
+  }
   rowData.innerHTML = cartona;
-  // put cartona in html 
+  // put cartona in html
 }
