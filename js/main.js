@@ -18,7 +18,7 @@ async function search() {
   let value = searchInput.value;
   if (regex.test(value)) {
     let x = await fetch(
-      `http://api.weatherapi.com/v1/search.json?key=10a2f41ca0584e56a0e181338251804&q=${value}`
+      `https://api.weatherapi.com/v1/search.json?key=10a2f41ca0584e56a0e181338251804&q=${value}`
     );
     let data = await x.json();// array has many city start with lon choose first one only
     
