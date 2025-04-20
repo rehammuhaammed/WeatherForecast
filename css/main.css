@@ -1,0 +1,67 @@
+body{
+    background-color: #B5D8FE;
+    
+    transition: all 0.5s ease-in;
+    font-size: 20px;
+    
+    font-family: "Winky Rough", sans-serif;
+}
+ nav {
+    background-color: #80B7D9;
+    
+}
+ nav .logo span,
+.nav-link,
+.navbar-nav .nav-link.active
+{
+    color: aliceblue;
+    font-size: 1.25rem;
+}
+nav .logo span{
+    font-size: 1.5625rem;
+}
+.logo-img{
+    width: 2.5rem;
+}
+.nav-link:hover,
+.nav-link:focus{
+    color: aliceblue;
+}
+
+ .myInput{
+    position: relative;
+ }
+  .searchBtn{
+    position: absolute;
+    right: 0%;
+    top: 24%;
+    width: 6.75rem;
+    background-color: #80B7D9;
+}
+ .searchBtn:active{
+    background-color: #80B7D9;
+    border: none;
+}
+ .searchBtn:hover{
+    background-color: #80B7D9;
+    border: none;
+}
+
+.row .col .inner{
+    background-color: #f1f1f1;
+    border-radius: 1rem;
+    padding: 3.125rem;
+    height: 100%;
+    background-image:linear-gradient(rgba(240, 240, 240, 0.3), rgba(0, 0, 0, 0.3)), url(../images/inner\ bg.png);
+    
+    color: #032f4a;
+}
+.row .col .header span {
+font-size: 1.25rem;
+}
+
+.num{
+    font-size: 2.8125rem;
+}
+
+
