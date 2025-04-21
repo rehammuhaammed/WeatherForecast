@@ -3,16 +3,37 @@ let rowData = document.getElementById("row");
 let msg = document.getElementById("msg");
 let regex = /^[A-Za-z ]{3,}$/;
 let forecastData = [];
-getWeather(); // at first the forecast of cairo has displayed
-async function getWeather() {
+getWeather(); // 
+ function getWeather() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
+
+async function success(position) {
+  let lat=position.coords.latitude
+  let long=position.coords.longitude
+  console.log(`lat= ${lat}, log=${long}`);
   let x = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=10a2f41ca0584e56a0e181338251804&q=Cairo&days=3`
+    `https://api.weatherapi.com/v1/forecast.json?key=10a2f41ca0584e56a0e181338251804&q=${lat},${long}&days=3`
   );
-  forcast = await x.json(); // forcat
+  forcast = await x.json();
 
   extractdata();
   display();
 }
+
+async function error() {
+  let x = await fetch(
+     `https://api.weatherapi.com/v1/forecast.json?key=10a2f41ca0584e56a0e181338251804&q=Cairo&days=3`
+  );
+  forcast = await x.json();
+
+  extractdata();
+  display();
+}
+
+
 
 async function search() {
   let value = searchInput.value;
@@ -111,7 +132,7 @@ function display() {
                     </div>
 
                     <span id="todayText">${forecastData[0].text}</span>
-                    <ul class="d-flex flex-row list-unstyled gap-4 my-3">
+                    <ul class="d-flex flex-row list-unstyled gap-4 my-4">
                       <li>
                         <span>
                           <img src="images/icon-umberella.png" alt="" />
