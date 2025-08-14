@@ -99,9 +99,12 @@ function extractdata() {
       Avgtemp,
       maxTemp,
       minTemp,
-    });
+});
+
+
   }
   // array has full data for three the  days
+  // console.log("hgggg",forecastData);
 }
 
 function display() {
